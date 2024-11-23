@@ -1,0 +1,50 @@
+import React ,{useState,useEffect} from 'react'
+import axios from 'axios'
+function GetmovieData() {
+
+    const[data,setdata]=useState([]);
+
+    
+    useEffect(()=>{
+        const fetchData= async ()=>{
+            try{
+                const {data:response}=await axios.get('http://localhost:3000/getmovies');
+                setdata(response);
+                console.log(response);
+            }catch(error){
+                console.error(error.message);
+            }
+        }
+        fetchData();
+    },[]);
+  return (
+   <>
+   <h1>Movie Data</h1>
+   <table border='1px'>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Rating</th>
+            <th>Yaer</th>
+            <th>Actor</th>
+            <th>Actress</th>
+        </tr>
+    </thead>
+    <tbody>
+        {data.map((r,i)=>(
+            <tr key={i}>
+              <td>{r.Name}</td>  
+              <td>{r.Rating}</td>  
+              <td>{r.Yaer}</td>  
+              <td>{r.Actor}</td>  
+              <td>{r.Actress}</td>  
+            </tr>
+        ))}
+
+    </tbody>  
+   </table>
+   </>
+  )
+}
+
+export default GetmovieData
